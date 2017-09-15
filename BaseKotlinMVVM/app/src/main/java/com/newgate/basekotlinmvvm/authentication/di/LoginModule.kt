@@ -24,13 +24,15 @@ class LoginModule(val activity: BaseActivity) {
 
     @Provides
     @FragmentScope
-    fun provideLoginViewModel(appContext: Application, retrofit: Retrofit, authenticationRequestManager: AuthenticationRequestManager): LoginViewModel {
-        return LoginViewModel(appContext, retrofit, authenticationRequestManager)
+    fun provideNavigationManager(): NavigationManager {
+        return NavigationManager(activity)
     }
 
     @Provides
     @FragmentScope
-    fun provideNavigationManager(): NavigationManager {
-        return NavigationManager(activity)
+    fun provideLoginViewModel(appContext: Application, retrofit: Retrofit,
+                              authenticationRequestManager: AuthenticationRequestManager,
+                              navigationManager: NavigationManager): LoginViewModel {
+        return LoginViewModel(appContext, retrofit, authenticationRequestManager, navigationManager)
     }
 }

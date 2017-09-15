@@ -1,5 +1,6 @@
 package com.newgate.basekotlinmvvm.authentication.view
 
+import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import com.newgate.basekotlinmvvm.authentication.di.LoginModule
 import com.newgate.basekotlinmvvm.authentication.network.AuthenticationRequestManager
 import com.newgate.basekotlinmvvm.authentication.view.viewmodel.LoginViewModel
 import com.newgate.basekotlinmvvm.base.di.BaseActivity
+import com.newgate.basekotlinmvvm.databinding.FragmentLoginBinding
 import com.newgate.rxjava.base.NavigationManager
 import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.android.synthetic.main.fragment_login.view.*
@@ -34,14 +36,13 @@ class LoginFragment : BaseFragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view = inflater?.inflate(R.layout.fragment_login, container, false)
         setupActivityComponent()
-        initData(view!!)
+        initView(view!!)
         return view
     }
 
-    fun initData(view: View) {
-        view.registerButton.setOnClickListener {
-            navigationManager.openFragment(R.id.containerFrame, RegisterFragment(), NavigationManager.Type.REPLACE, NavigationManager.AnimationType.BOTTOM_TOP)
-        }
+    fun initView(view: View) {
+        var binding = DataBindingUtil.bind<FragmentLoginBinding>(view)
+        binding.viewModel = viewModel
     }
 
     fun setupActivityComponent() {

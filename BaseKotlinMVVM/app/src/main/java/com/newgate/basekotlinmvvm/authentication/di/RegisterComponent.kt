@@ -1,6 +1,7 @@
 package com.newgate.basekotlinmvvm.authentication.di
 
 import com.newgate.basekotlinmvvm.authentication.view.RegisterFragment
+import com.newgate.basekotlinmvvm.authentication.viewmodel.RegisterViewModel
 import com.newgate.basekotlinmvvm.base.di.scope.FragmentScope
 import dagger.Subcomponent
 

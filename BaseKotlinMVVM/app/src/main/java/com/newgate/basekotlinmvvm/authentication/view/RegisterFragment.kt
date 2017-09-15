@@ -11,7 +11,6 @@ import com.newgate.basekotlinmvvm.authentication.di.RegisterModule
 import com.newgate.basekotlinmvvm.authentication.viewmodel.RegisterViewModel
 import com.newgate.basekotlinmvvm.base.view.BaseFragment
 import com.newgate.basekotlinmvvm.databinding.FragmentRegisterBinding
-import retrofit2.Retrofit
 import javax.inject.Inject
 
 /**

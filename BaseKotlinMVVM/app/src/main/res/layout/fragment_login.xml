@@ -61,6 +61,7 @@
             android:layout_marginTop="20dp"
             android:text="REGISTER"
             android:textColor="@color/colorPrimary"
+            android:onClick="@{()->viewModel.openRegisterScreen()}"
             />
 
     </RelativeLayout>
