@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">BaseKotlinMVVM</string>
+
+    <string-array name="array_menu">
+        <item>HOME</item>
+        <item>login</item>
+        <item>LOGIN</item>
+        <item>about me</item>
+        <item>ABOUT ME</item>
+    </string-array>
+
+    <!-- authentication -->
+    <string name="warning_pass_empty">Mật khẩu không được để trống</string>
+    <string name="warning_pass_format">Mật khẩu phải chứa từ 8 kỳ tự trở lên</string>
+    <string name="warning_email_empty">Email không được để trống</string>
+    <string name="warning_email_format">Email không đúng định dạng</string>
+
+</resources>

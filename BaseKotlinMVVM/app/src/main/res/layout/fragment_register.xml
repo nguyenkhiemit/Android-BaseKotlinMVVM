@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.newgate.basekotlinmvvm.authentication.viewmodel.RegisterViewModel"/>
+    </data>
+
+    <RelativeLayout
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
+
+        <EditText
+            android:id="@+id/nameEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/passEditText"
+            android:text="@={viewModel.textEmail}"
+            />
+
+        <TextView
+            android:id="@+id/warningEmailText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/nameEditText"
+            android:text="@{viewModel.warningEmail}"
+            android:textColor="@color/colorAccent" />
+
+        <EditText
+            android:id="@+id/passEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:layout_centerInParent="true"
+            android:text="@={viewModel.textPassword}"/>
+
+        <TextView
+            android:id="@+id/warningPassText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/passEditText"
+            android:text="@{viewModel.warningPassword}"
+            android:textColor="@color/colorAccent"/>
+
+        <Button
+            android:id="@+id/loginButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:layout_centerInParent="true"
+            android:layout_below="@+id/passEditText"
+            android:onClick="@{()->viewModel.register()}"
+            android:text="REGISTER"/>
+
+    </RelativeLayout>
+
+</layout>
