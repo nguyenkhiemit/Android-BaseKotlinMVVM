@@ -2,13 +2,25 @@ package com.newgate.basekotlinmvvm.menu.viewmodel
 
 import android.content.Context
 import com.newgate.basekotlinmvvm.R
+import com.newgate.basekotlinmvvm.base.LifecycleViewModel
 import com.newgate.basekotlinmvvm.menu.model.Menu
 
 
 /**
  * Created by apple on 9/9/17.
  */
-class MenuViewModel(var context: Context) {
+class MenuViewModel(var context: Context): LifecycleViewModel {
+    
+    override fun onViewStart() {
+
+    }
+
+    override fun onViewResume() {
+
+    }
+
+    override fun onViewDestroy() {
+    }
 
     companion object {
         val POS_HOME = 0
@@ -27,9 +39,5 @@ class MenuViewModel(var context: Context) {
         arrayMenu.add(Menu(POS_ABOUT_TITLE, menus[POS_ABOUT_TITLE], 0))
         arrayMenu.add(Menu(POS_ABOUT, menus[POS_ABOUT], 1))
         return arrayMenu
-    }
-
-    fun openFragment() {
-
     }
 }

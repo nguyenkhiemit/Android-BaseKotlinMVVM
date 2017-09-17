@@ -1,7 +1,6 @@
 package com.newgate.basekotlinmvvm.authentication.network
 
-import android.util.Log
-import com.newgate.basekotlinmvvm.authentication.Constant
+import com.newgate.basekotlinmvvm.authentication.AuthenticationConstant
 import com.newgate.basekotlinmvvm.authentication.model.LoginRequest
 import com.newgate.basekotlinmvvm.authentication.model.LoginResponse
 import io.reactivex.Maybe
@@ -21,8 +20,8 @@ class LoginAPIService(retrofit: Retrofit) {
     var isRequestingLogin: Boolean = false
 
     fun login(request: LoginRequest): Maybe<LoginResponse> {
-        return loginAPI.login(request.username, request.password, Constant
-                .CLIENT_ID, Constant.CLIENT_SECRET, Constant.GRANT_PASS_TYPE)
+        return loginAPI.login(request.username, request.password, AuthenticationConstant
+                .CLIENT_ID, AuthenticationConstant.CLIENT_SECRET, AuthenticationConstant.GRANT_PASS_TYPE)
                 .doOnSubscribe({isRequestingLogin = true})
                 .doOnTerminate({isRequestingLogin = false})
                 .subscribeOn(Schedulers.io())

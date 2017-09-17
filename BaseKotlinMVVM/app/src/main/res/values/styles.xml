@@ -8,4 +8,17 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="SmoothProgressDialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowAnimationStyle">@style/Animation.SmoothProgressDialog</item>
+    </style>
+
+    <style name="Animation" />
+
+    <style name="Animation.SmoothProgressDialog">
+        <item name="android:windowEnterAnimation">@anim/anim_enter_dialog</item>
+        <item name="android:windowExitAnimation">@anim/anim_exit_dialog</item>
+    </style>
+
 </resources>

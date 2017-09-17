@@ -3,7 +3,7 @@ package com.newgate.basekotlinmvvm.authentication.network
 import android.text.TextUtils
 import android.util.Log
 import com.newgate.basekotlinmvvm.authentication.model.*
-import com.newgate.basekotlinmvvm.base.Utils
+import com.newgate.basekotlinmvvm.base.utility.accessToken
 import io.reactivex.MaybeSource
 import retrofit2.Retrofit
 
@@ -42,7 +42,7 @@ class AuthenticationRequestManager(retrofit: Retrofit) {
 
     fun login(username: String, password: String): MaybeSource<AccountResponse> {
         return loginAPIService.login(createLoginRequest(username, password)).flatMap {
-            var accountRequest = AccountRequest(Utils.getAccessToken(it.accessToken))
+            var accountRequest = AccountRequest(it.accessToken.accessToken())
             getAccountRequest(accountRequest)
         }
     }

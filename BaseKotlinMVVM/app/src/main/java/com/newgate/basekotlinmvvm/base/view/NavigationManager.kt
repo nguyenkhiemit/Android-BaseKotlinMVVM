@@ -40,15 +40,17 @@ class NavigationManager(activity: BaseActivity) {
         if(findFragment(fragment.javaClass.simpleName)) {
             gotoFragment(fragment.javaClass.simpleName)
         } else {
+            if(animType != null) {
+                when (animType) {
+                    AnimationType.LEFT_RIGHT -> transaction.setCustomAnimations(R.anim.slide_enter_left,
+                            R.anim.slide_exit_right, R.anim.slide_enter_right, R.anim.slide_exit_left)
+                    AnimationType.BOTTOM_TOP -> transaction.setCustomAnimations(R.anim.slide_enter_bottom, R.anim.slide_exit_top,
+                            R.anim.slide_enter_top, R.anim.slide_exit_bottom)
+                }
+            }
             when(type) {
                 Type.ADD -> transaction.add(containerId, fragment, fragment.javaClass.simpleName)
                 Type.REPLACE -> transaction.replace(containerId, fragment, fragment.javaClass.simpleName)
-            }
-            if(animType != null) {
-                when (animType) {
-                    AnimationType.LEFT_RIGHT -> transaction.setCustomAnimations(R.anim.slide_enter_left, R.anim.slide_exit_left)
-                    AnimationType.BOTTOM_TOP -> transaction.setCustomAnimations(R.anim.slide_enter_bottom, R.anim.slide_exit_bottom)
-                }
             }
             transaction.addToBackStack(fragment.javaClass.simpleName)
             transaction.commit()

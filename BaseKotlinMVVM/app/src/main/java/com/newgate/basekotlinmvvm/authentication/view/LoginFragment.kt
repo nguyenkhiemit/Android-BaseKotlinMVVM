@@ -11,6 +11,7 @@ import com.newgate.basekotlinmvvm.base.view.BaseFragment
 import com.newgate.basekotlinmvvm.authentication.di.LoginModule
 import com.newgate.basekotlinmvvm.authentication.network.AuthenticationRequestManager
 import com.newgate.basekotlinmvvm.authentication.view.viewmodel.LoginViewModel
+import com.newgate.basekotlinmvvm.base.LifecycleViewModel
 import com.newgate.basekotlinmvvm.base.di.BaseActivity
 import com.newgate.basekotlinmvvm.databinding.FragmentLoginBinding
 import com.newgate.rxjava.base.NavigationManager
@@ -25,13 +26,11 @@ import javax.inject.Inject
 class LoginFragment : BaseFragment() {
 
     @Inject
-    lateinit var navigationManager: NavigationManager
-
-    @Inject
-    lateinit var retrofit: Retrofit
-
-    @Inject
     lateinit var viewModel: LoginViewModel
+
+    override fun getViewModel(): LifecycleViewModel {
+        return viewModel
+    }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view = inflater?.inflate(R.layout.fragment_login, container, false)
@@ -48,7 +47,7 @@ class LoginFragment : BaseFragment() {
     fun setupActivityComponent() {
         KotlinApplication.get(context)
                 .appComponent
-                .plus(LoginModule(getBaseActivity()!!))
+                .plus(LoginModule(activity))
                 .inject(this)
     }
 }

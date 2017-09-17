@@ -6,6 +6,8 @@ import com.newgate.basekotlinmvvm.authentication.di.LoginComponent
 import com.newgate.basekotlinmvvm.authentication.di.LoginModule
 import com.newgate.basekotlinmvvm.authentication.di.RegisterComponent
 import com.newgate.basekotlinmvvm.authentication.di.RegisterModule
+import com.newgate.basekotlinmvvm.home.di.HomeComponent
+import com.newgate.basekotlinmvvm.home.di.HomeModule
 import com.newgate.basekotlinmvvm.menu.di.MenuComponent
 import com.newgate.basekotlinmvvm.menu.di.MenuModule
 import dagger.Component
@@ -26,4 +28,6 @@ interface AppComponent {
     fun plus(loginModule: LoginModule): LoginComponent
 
     fun plus(registerModule: RegisterModule): RegisterComponent
+
+    fun plus(homeModule: HomeModule): HomeComponent
 }

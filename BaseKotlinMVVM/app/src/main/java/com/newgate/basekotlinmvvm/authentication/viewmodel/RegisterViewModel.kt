@@ -1,18 +1,43 @@
 package com.newgate.basekotlinmvvm.authentication.viewmodel
 
-import android.app.Application
 import android.databinding.ObservableField
 import android.text.TextUtils
 import com.newgate.basekotlinmvvm.authentication.model.AccountResponse
 import com.newgate.basekotlinmvvm.authentication.network.AuthenticationRequestManager
-import com.newgate.basekotlinmvvm.authentication.utils.Utils
+import com.newgate.basekotlinmvvm.base.utility.DialogUtils
+import com.newgate.basekotlinmvvm.authentication.utils.validateEmail
+import com.newgate.basekotlinmvvm.authentication.utils.validatePassword
+import com.newgate.basekotlinmvvm.base.Constant
+import com.newgate.basekotlinmvvm.base.LifecycleViewModel
 import com.newgate.basekotlinmvvm.base.NetworkViewModel
+import com.newgate.basekotlinmvvm.base.di.BaseActivity
+import com.newgate.basekotlinmvvm.base.Constant.Companion.RequestState
 import retrofit2.Retrofit
 
 /**
  * Created by apple on 9/13/17.
  */
-class RegisterViewModel(val appContext: Application, val retrofit: Retrofit, var authenticationRequestManager: AuthenticationRequestManager): NetworkViewModel() {
+class RegisterViewModel(val activity: BaseActivity,
+                        val retrofit: Retrofit,
+                        var authenticationRequestManager: AuthenticationRequestManager)
+    : NetworkViewModel(), LifecycleViewModel {
+
+    override fun onViewStart() {
+
+    }
+
+    override fun onViewDestroy() {
+    }
+
+    override fun onViewResume() {
+        @RequestState
+        var requestState = getRequestState()
+        if(requestState == Constant.REQUEST_SUCCEEDED) {
+            onRegisterSuccess()
+        } else if(requestState == Constant.REQUEST_FAILED) {
+            onRegisterError()
+        }
+    }
 
     var warningEmail = ObservableField<String>()
 
@@ -29,28 +54,42 @@ class RegisterViewModel(val appContext: Application, val retrofit: Retrofit, var
     fun register() {
         var username = textEmail.get()
         var password = textPassword.get()
-        var validateEmail = Utils.validateEmail(appContext, username)
-        var validatePassword = Utils.validatePassword(appContext, password)
+        var validateEmail = username.validateEmail(activity)
+        var validatePassword = password.validatePassword(activity)
         warningEmail.set(validateEmail)
         warningPassword.set(validatePassword)
 
         if(!TextUtils.isEmpty(validateEmail) || !TextUtils.isEmpty(validatePassword))
             return
+        DialogUtils.getInstance().showLoading(activity)
         authenticationRequestManager.register(username, password).subscribe(RegisterObserver())
+    }
+
+    fun onRegisterSuccess() {
+        DialogUtils.getInstance().dismissLoading()
+    }
+
+    fun onRegisterError() {
+        DialogUtils.getInstance().dismissLoading()
     }
 
     inner class RegisterObserver: MaybeNetworkObserver<AccountResponse>() {
 
         override fun onSuccess(t: AccountResponse) {
             super.onSuccess(t)
+            onRegisterSuccess()
+            DialogUtils.getInstance().dismissLoading()
         }
 
         override fun onComplete() {
             super.onComplete()
+            DialogUtils.getInstance().dismissLoading()
         }
 
         override fun onError(e: Throwable) {
             super.onError(e)
+            onRegisterError()
+            DialogUtils.getInstance().dismissLoading()
         }
     }
 }
