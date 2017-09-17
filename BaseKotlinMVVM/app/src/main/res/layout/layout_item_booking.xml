@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="booking"
+            type="com.newgate.basekotlinmvvm.home.model.Booking"/>
+    </data>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_margin="16dp"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/bookingImageView"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            app:imageUrl="@{booking.image}"/>
+
+        <TextView
+            android:id="@+id/bookingNameText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textColor="@color/colorPrimary"
+            android:text="@{booking.name}"/>
+
+    </LinearLayout>
+</layout>
