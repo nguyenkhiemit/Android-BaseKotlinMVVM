@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.newgate.basekotlinmvvm.R
+import com.newgate.basekotlinmvvm.base.utility.KeyCode
 import com.newgate.basekotlinmvvm.base.view.EndlessRecyclerOnScrollListener
 import kotlinx.android.synthetic.main.layout_item_load_more.view.*
 
