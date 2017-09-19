@@ -1,6 +1,5 @@
 package com.newgate.basekotlinmvvm.home.view
 
-import android.app.Fragment
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.newgate.basekotlinmvvm.KotlinApplication
 import com.newgate.basekotlinmvvm.R
-import com.newgate.basekotlinmvvm.base.LifecycleViewModel
+import com.newgate.basekotlinmvvm.base.viewmodel.LifecycleViewModel
 import com.newgate.basekotlinmvvm.base.view.BaseFragment
 import com.newgate.basekotlinmvvm.databinding.FragmentHomeBinding
 import com.newgate.basekotlinmvvm.home.di.HomeModule

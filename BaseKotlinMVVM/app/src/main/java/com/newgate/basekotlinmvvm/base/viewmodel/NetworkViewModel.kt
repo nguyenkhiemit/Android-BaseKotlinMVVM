@@ -1,17 +1,17 @@
-package com.newgate.basekotlinmvvm.base
+package com.newgate.basekotlinmvvm.base.viewmodel
 
 import android.support.annotation.CallSuper
-import com.newgate.basekotlinmvvm.base.Constant.Companion.REQUEST_FAILED
-import com.newgate.basekotlinmvvm.base.Constant.Companion.REQUEST_NONE
-import com.newgate.basekotlinmvvm.base.Constant.Companion.REQUEST_RUNNING
-import com.newgate.basekotlinmvvm.base.Constant.Companion.REQUEST_SUCCEEDED
-import com.newgate.basekotlinmvvm.base.Constant.Companion.RequestState
+import com.newgate.basekotlinmvvm.base.utility.Constant.Companion.REQUEST_FAILED
+import com.newgate.basekotlinmvvm.base.utility.Constant.Companion.REQUEST_NONE
+import com.newgate.basekotlinmvvm.base.utility.Constant.Companion.REQUEST_RUNNING
+import com.newgate.basekotlinmvvm.base.utility.Constant.Companion.REQUEST_SUCCEEDED
+import com.newgate.basekotlinmvvm.base.utility.Constant.Companion.RequestState
 import io.reactivex.observers.DisposableMaybeObserver
 
 /**
  * Created by apple on 9/11/17.
  */
-abstract class NetworkViewModel {
+abstract class NetworkViewModel: LifecycleViewModel {
 
     abstract fun isRequestingInformation(): Boolean
 
@@ -50,4 +50,21 @@ abstract class NetworkViewModel {
         }
 
     }
+
+    override fun onActivityCreated() {
+
+    }
+
+    override fun onStart() {
+
+    }
+
+    override fun onResume() {
+
+    }
+
+    override fun onDestroy() {
+
+    }
+
 }

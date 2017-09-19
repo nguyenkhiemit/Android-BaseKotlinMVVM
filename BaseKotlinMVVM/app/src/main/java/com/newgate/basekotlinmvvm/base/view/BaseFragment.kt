@@ -1,8 +1,9 @@
 package com.newgate.basekotlinmvvm.base.view
 
+import android.os.Bundle
 import android.support.v4.app.Fragment
 import com.newgate.basekotlinmvvm.activity.MainActivity
-import com.newgate.basekotlinmvvm.base.LifecycleViewModel
+import com.newgate.basekotlinmvvm.base.viewmodel.LifecycleViewModel
 import com.newgate.basekotlinmvvm.base.di.BaseActivity
 import com.newgate.rxjava.base.NavigationManager
 
@@ -17,19 +18,24 @@ open abstract class BaseFragment: Fragment() {
         NavigationManager(activity)
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        getViewModel()?.onActivityCreated()
+    }
+
     override fun onStart() {
         super.onStart()
-        getViewModel()?.onViewStart()
+        getViewModel()?.onStart()
     }
 
     override fun onStop() {
         super.onStop()
-        getViewModel()?.onViewDestroy()
+        getViewModel()?.onDestroy()
     }
 
     override fun onResume() {
         super.onResume()
-        getViewModel()?.onViewResume()
+        getViewModel()?.onResume()
     }
 
     protected val activity: BaseActivity

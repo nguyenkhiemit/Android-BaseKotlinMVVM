@@ -9,7 +9,7 @@ import com.newgate.basekotlinmvvm.KotlinApplication
 import com.newgate.basekotlinmvvm.R
 import com.newgate.basekotlinmvvm.authentication.di.RegisterModule
 import com.newgate.basekotlinmvvm.authentication.viewmodel.RegisterViewModel
-import com.newgate.basekotlinmvvm.base.LifecycleViewModel
+import com.newgate.basekotlinmvvm.base.viewmodel.LifecycleViewModel
 import com.newgate.basekotlinmvvm.base.view.BaseFragment
 import com.newgate.basekotlinmvvm.databinding.FragmentRegisterBinding
 import javax.inject.Inject

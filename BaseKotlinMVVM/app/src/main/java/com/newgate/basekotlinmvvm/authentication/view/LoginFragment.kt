@@ -9,15 +9,9 @@ import com.newgate.basekotlinmvvm.KotlinApplication
 import com.newgate.basekotlinmvvm.R
 import com.newgate.basekotlinmvvm.base.view.BaseFragment
 import com.newgate.basekotlinmvvm.authentication.di.LoginModule
-import com.newgate.basekotlinmvvm.authentication.network.AuthenticationRequestManager
 import com.newgate.basekotlinmvvm.authentication.view.viewmodel.LoginViewModel
-import com.newgate.basekotlinmvvm.base.LifecycleViewModel
-import com.newgate.basekotlinmvvm.base.di.BaseActivity
+import com.newgate.basekotlinmvvm.base.viewmodel.LifecycleViewModel
 import com.newgate.basekotlinmvvm.databinding.FragmentLoginBinding
-import com.newgate.rxjava.base.NavigationManager
-import kotlinx.android.synthetic.main.fragment_login.*
-import kotlinx.android.synthetic.main.fragment_login.view.*
-import retrofit2.Retrofit
 import javax.inject.Inject
 
 /**

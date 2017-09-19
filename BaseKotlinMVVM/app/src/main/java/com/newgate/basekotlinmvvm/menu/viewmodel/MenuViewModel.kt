@@ -2,7 +2,7 @@ package com.newgate.basekotlinmvvm.menu.viewmodel
 
 import android.content.Context
 import com.newgate.basekotlinmvvm.R
-import com.newgate.basekotlinmvvm.base.LifecycleViewModel
+import com.newgate.basekotlinmvvm.base.viewmodel.LifecycleViewModel
 import com.newgate.basekotlinmvvm.menu.model.Menu
 
 
@@ -10,16 +10,19 @@ import com.newgate.basekotlinmvvm.menu.model.Menu
  * Created by apple on 9/9/17.
  */
 class MenuViewModel(var context: Context): LifecycleViewModel {
-    
-    override fun onViewStart() {
+
+    override fun onActivityCreated() {
+    }
+
+    override fun onStart() {
 
     }
 
-    override fun onViewResume() {
+    override fun onResume() {
 
     }
 
-    override fun onViewDestroy() {
+    override fun onDestroy() {
     }
 
     companion object {

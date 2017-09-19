@@ -2,7 +2,7 @@ package com.newgate.basekotlinmvvm.base.bindingadapter
 
 import android.databinding.BindingAdapter
 import android.widget.ImageView
-import com.newgate.basekotlinmvvm.base.Constant
+import com.newgate.basekotlinmvvm.base.utility.Constant
 import com.squareup.picasso.Picasso
 
 

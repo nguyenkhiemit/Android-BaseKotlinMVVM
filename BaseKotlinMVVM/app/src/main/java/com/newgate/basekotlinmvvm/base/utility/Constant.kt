@@ -1,4 +1,4 @@
-package com.newgate.basekotlinmvvm.base
+package com.newgate.basekotlinmvvm.base.utility
 
 import android.support.annotation.IntDef
 
@@ -29,7 +29,13 @@ class Constant {
     @RequestState
     private var state: Long = 0L
 
-    public fun setRequestState(@RequestState state: Long) {
+    fun setRequestState(@RequestState state: Long) {
         this.state = state
+    }
+}
+
+class KeyCode {
+    companion object {
+        const val SUCCESS = "success"
     }
 }

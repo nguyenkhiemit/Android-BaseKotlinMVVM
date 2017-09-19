@@ -14,17 +14,8 @@ import com.newgate.basekotlinmvvm.home.model.Booking
 /**
  * Created by apple on 9/16/17.
  */
-class BookingAdapter:
-        LoadMoreAdapter<List<Booking>> {
-
-    var context: Context? = null
-
-    var arrayBooking: ArrayList<Booking>? = null
-
-    constructor(context: Context, arrayBooking: ArrayList<Booking>) : super(context, arrayBooking) {
-        this.context = context
-        this.arrayBooking = arrayBooking
-    }
+class BookingAdapter(var context: Context, var arrayBooking: ArrayList<Booking?>):
+        LoadMoreAdapter<Booking>(context, arrayBooking) {
 
     private val TYPE_BOOKING = 0
 
@@ -40,7 +31,7 @@ class BookingAdapter:
     override fun onBindVHolder(holder: RecyclerView.ViewHolder, position: Int) {
         var booking = arrayBooking!![position]
         if(holder is BookingViewHolder) {
-            holder.bindData(booking)
+            holder.bindData(booking!!)
         }
     }
 

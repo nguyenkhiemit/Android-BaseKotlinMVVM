@@ -7,11 +7,11 @@ import com.newgate.basekotlinmvvm.authentication.network.AuthenticationRequestMa
 import com.newgate.basekotlinmvvm.base.utility.DialogUtils
 import com.newgate.basekotlinmvvm.authentication.utils.validateEmail
 import com.newgate.basekotlinmvvm.authentication.utils.validatePassword
-import com.newgate.basekotlinmvvm.base.Constant
-import com.newgate.basekotlinmvvm.base.LifecycleViewModel
-import com.newgate.basekotlinmvvm.base.NetworkViewModel
+import com.newgate.basekotlinmvvm.base.utility.Constant
+import com.newgate.basekotlinmvvm.base.viewmodel.LifecycleViewModel
+import com.newgate.basekotlinmvvm.base.viewmodel.NetworkViewModel
 import com.newgate.basekotlinmvvm.base.di.BaseActivity
-import com.newgate.basekotlinmvvm.base.Constant.Companion.RequestState
+import com.newgate.basekotlinmvvm.base.utility.Constant.Companion.RequestState
 import retrofit2.Retrofit
 
 /**
@@ -22,14 +22,14 @@ class RegisterViewModel(val activity: BaseActivity,
                         var authenticationRequestManager: AuthenticationRequestManager)
     : NetworkViewModel(), LifecycleViewModel {
 
-    override fun onViewStart() {
+    override fun onStart() {
 
     }
 
-    override fun onViewDestroy() {
+    override fun onDestroy() {
     }
 
-    override fun onViewResume() {
+    override fun onResume() {
         @RequestState
         var requestState = getRequestState()
         if(requestState == Constant.REQUEST_SUCCEEDED) {

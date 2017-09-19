@@ -9,7 +9,7 @@ import com.newgate.basekotlinmvvm.KotlinApplication
 import com.newgate.basekotlinmvvm.R
 import com.newgate.basekotlinmvvm.base.view.BaseFragment
 import com.newgate.basekotlinmvvm.authentication.view.LoginFragment
-import com.newgate.basekotlinmvvm.base.LifecycleViewModel
+import com.newgate.basekotlinmvvm.base.viewmodel.LifecycleViewModel
 import com.newgate.basekotlinmvvm.menu.adapter.MenuAdapter
 import com.newgate.basekotlinmvvm.menu.di.MenuModule
 import com.newgate.basekotlinmvvm.menu.viewmodel.MenuViewModel

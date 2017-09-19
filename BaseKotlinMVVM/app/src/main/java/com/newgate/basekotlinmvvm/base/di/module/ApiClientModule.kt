@@ -2,7 +2,7 @@ package com.newgate.basekotlinmvvm.base.di.module
 
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import com.newgate.basekotlinmvvm.BuildConfig
-import com.newgate.basekotlinmvvm.base.Constant
+import com.newgate.basekotlinmvvm.base.utility.Constant
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient

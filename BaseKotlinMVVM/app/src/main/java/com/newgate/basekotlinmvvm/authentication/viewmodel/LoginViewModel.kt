@@ -9,13 +9,13 @@ import com.newgate.basekotlinmvvm.base.utility.DialogUtils
 import com.newgate.basekotlinmvvm.authentication.utils.validateEmail
 import com.newgate.basekotlinmvvm.authentication.utils.validatePassword
 import com.newgate.basekotlinmvvm.authentication.view.RegisterFragment
-import com.newgate.basekotlinmvvm.base.Constant.Companion.REQUEST_FAILED
-import com.newgate.basekotlinmvvm.base.Constant.Companion.REQUEST_SUCCEEDED
-import com.newgate.basekotlinmvvm.base.LifecycleViewModel
-import com.newgate.basekotlinmvvm.base.NetworkViewModel
+import com.newgate.basekotlinmvvm.base.utility.Constant.Companion.REQUEST_FAILED
+import com.newgate.basekotlinmvvm.base.utility.Constant.Companion.REQUEST_SUCCEEDED
+import com.newgate.basekotlinmvvm.base.viewmodel.LifecycleViewModel
+import com.newgate.basekotlinmvvm.base.viewmodel.NetworkViewModel
 import com.newgate.basekotlinmvvm.base.di.BaseActivity
 import com.newgate.rxjava.base.NavigationManager
-import com.newgate.basekotlinmvvm.base.Constant.Companion.RequestState
+import com.newgate.basekotlinmvvm.base.utility.Constant.Companion.RequestState
 import retrofit2.Retrofit
 
 /**
@@ -28,14 +28,14 @@ class LoginViewModel(
         val navigationManager: NavigationManager
 ): NetworkViewModel(), LifecycleViewModel {
 
-    override fun onViewStart() {
+    override fun onStart() {
 
     }
 
-    override fun onViewDestroy() {
+    override fun onDestroy() {
     }
 
-    override fun onViewResume() {
+    override fun onResume() {
         @RequestState
         var requestState = getRequestState()
         if(requestState == REQUEST_SUCCEEDED) {
