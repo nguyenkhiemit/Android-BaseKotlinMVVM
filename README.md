@@ -22,4 +22,4 @@ _ Completable: Either completes with an success or with an error event. It never
 _ Maybe: Single + Completable: Succeeds with an item, or no item, or errors. The reactive version of an Optional.
 
 * Observable, Flowable subcribe a Subscriber
-* Maybe, Single, Completeable subscribe a Observer
+* Maybe, Single, Completable subscribe a Observer
