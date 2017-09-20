@@ -10,7 +10,7 @@ import com.newgate.basekotlinmvvm.R
 import com.newgate.basekotlinmvvm.base.view.BaseFragment
 import com.newgate.basekotlinmvvm.authentication.di.LoginModule
 import com.newgate.basekotlinmvvm.authentication.view.viewmodel.LoginViewModel
-import com.newgate.basekotlinmvvm.base.viewmodel.LifecycleViewModel
+import com.newgate.basekotlinmvvm.base.viewmodel.Lifecycle
 import com.newgate.basekotlinmvvm.databinding.FragmentLoginBinding
 import javax.inject.Inject
 
@@ -22,7 +22,7 @@ class LoginFragment : BaseFragment() {
     @Inject
     lateinit var viewModel: LoginViewModel
 
-    override fun getViewModel(): LifecycleViewModel {
+    override fun getViewModel(): Lifecycle {
         return viewModel
     }
 

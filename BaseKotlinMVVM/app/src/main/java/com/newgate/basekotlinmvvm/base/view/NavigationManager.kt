@@ -79,6 +79,11 @@ class NavigationManager(activity: BaseActivity) {
         }
     }
 
+    fun isRoot(): Boolean {
+        return fragmentManager.getBackStackEntryCount() <= 1
+    }
+
+
     fun gotoFragment(tag: String) {
         var count = backStackCount()
         while (count > 1) {

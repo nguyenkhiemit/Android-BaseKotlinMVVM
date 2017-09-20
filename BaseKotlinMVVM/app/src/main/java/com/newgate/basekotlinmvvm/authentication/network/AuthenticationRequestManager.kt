@@ -3,6 +3,8 @@ package com.newgate.basekotlinmvvm.authentication.network
 import android.text.TextUtils
 import android.util.Log
 import com.newgate.basekotlinmvvm.authentication.model.*
+import com.newgate.basekotlinmvvm.authentication.utils.AuthencationKey
+import com.newgate.basekotlinmvvm.base.utility.PrefsUtil
 import com.newgate.basekotlinmvvm.base.utility.accessToken
 import io.reactivex.MaybeSource
 import retrofit2.Retrofit
@@ -10,7 +12,10 @@ import retrofit2.Retrofit
 /**
  * Created by apple on 9/11/17.
  */
-class AuthenticationRequestManager(retrofit: Retrofit) {
+class AuthenticationRequestManager(
+            val retrofit: Retrofit,
+            val prefsUtil: PrefsUtil
+        ) {
 
     val loginAPIService: LoginAPIService by lazy {
         LoginAPIService(retrofit)
@@ -42,6 +47,7 @@ class AuthenticationRequestManager(retrofit: Retrofit) {
 
     fun login(username: String, password: String): MaybeSource<AccountResponse> {
         return loginAPIService.login(createLoginRequest(username, password)).flatMap {
+            prefsUtil.savePref(AuthencationKey.ACCESS_TOKEN, it.accessToken.accessToken())
             var accountRequest = AccountRequest(it.accessToken.accessToken())
             getAccountRequest(accountRequest)
         }

@@ -8,7 +8,7 @@ import com.newgate.basekotlinmvvm.base.utility.DialogUtils
 import com.newgate.basekotlinmvvm.authentication.utils.validateEmail
 import com.newgate.basekotlinmvvm.authentication.utils.validatePassword
 import com.newgate.basekotlinmvvm.base.utility.Constant
-import com.newgate.basekotlinmvvm.base.viewmodel.LifecycleViewModel
+import com.newgate.basekotlinmvvm.base.viewmodel.Lifecycle
 import com.newgate.basekotlinmvvm.base.viewmodel.NetworkViewModel
 import com.newgate.basekotlinmvvm.base.di.BaseActivity
 import com.newgate.basekotlinmvvm.base.utility.Constant.Companion.RequestState
@@ -20,7 +20,7 @@ import retrofit2.Retrofit
 class RegisterViewModel(val activity: BaseActivity,
                         val retrofit: Retrofit,
                         var authenticationRequestManager: AuthenticationRequestManager)
-    : NetworkViewModel(), LifecycleViewModel {
+    : NetworkViewModel(), Lifecycle {
 
     override fun onStart() {
 

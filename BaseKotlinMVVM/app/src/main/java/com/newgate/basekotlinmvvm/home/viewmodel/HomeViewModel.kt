@@ -1,20 +1,14 @@
 package com.newgate.basekotlinmvvm.home.viewmodel
 
-import android.os.Handler
 import android.util.Log
-import com.newgate.basekotlinmvvm.base.utility.DialogUtils
-import com.newgate.basekotlinmvvm.base.viewmodel.LifecycleViewModel
+import com.newgate.basekotlinmvvm.authentication.utils.AuthencationKey
+import com.newgate.basekotlinmvvm.base.viewmodel.Lifecycle
 import com.newgate.basekotlinmvvm.base.viewmodel.NetworkViewModel
 import com.newgate.basekotlinmvvm.base.di.BaseActivity
-import com.newgate.basekotlinmvvm.base.utility.Constant
-import com.newgate.basekotlinmvvm.base.utility.KeyCode
-import com.newgate.basekotlinmvvm.base.utility.accessToken
+import com.newgate.basekotlinmvvm.base.utility.*
 import com.newgate.basekotlinmvvm.home.adapter.BookingAdapter
 import com.newgate.basekotlinmvvm.home.model.BookingResponse
 import com.newgate.basekotlinmvvm.home.network.HomeRequestManager
-import io.reactivex.disposables.Disposable
-import org.reactivestreams.Subscriber
-import org.reactivestreams.Subscription
 import retrofit2.Retrofit
 
 /**
@@ -24,18 +18,56 @@ class HomeViewModel(
         val activity: BaseActivity,
         val retrofit: Retrofit,
         val bookingAdapter: BookingAdapter,
-        val bookingRequestManager: HomeRequestManager
-    ): NetworkViewModel(), LifecycleViewModel {
+        val bookingRequestManager: HomeRequestManager,
+        val prefsUtil: PrefsUtil
+    ): NetworkViewModel() {
 
     var pageSize: Int = 10
 
+    override fun onCreate() {
+        super.onCreate()
+        Log.e("X_load", "==> onCreate")
+    }
+
+    override fun onCreateView() {
+        super.onCreateView()
+        Log.e("X_load", "==> onCreateView")
+    }
+
+    override fun onViewCreated() {
+        super.onViewCreated()
+        Log.e("X_load", "==> onViewCreated")
+    }
+
     override fun onActivityCreated() {
         super.onActivityCreated()
+        Log.e("X_load", "==> onActivityCreated")
         getListBooking()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.e("X_load", "==> onPause")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.e("X_load", "==> onStop")
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Log.e("X_load", "==> onDestroyView")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.e("X_load", "==> onDestroy")
     }
 
     override fun onResume() {
         super.onResume()
+        Log.e("X_load", "==> onResume")
         @Constant.Companion.RequestState
         var requestState = getRequestState()
         if(requestState == Constant.REQUEST_SUCCEEDED) {
@@ -50,31 +82,14 @@ class HomeViewModel(
     }
 
     fun getListBooking() {
+        var accessToken = prefsUtil.getPref(AuthencationKey.ACCESS_TOKEN, "")
         DialogUtils.getInstance().showLoading(activity)
         //1) load data
         bookingAdapter.setLoadMoreData {
             Log.e("XLoadMore ", "page = " + it)
-            bookingRequestManager.getListBooking("ZGxp91HJz1N6Q48QVifJatWoF4D3N5".accessToken(), it, pageSize)
+            bookingRequestManager.getListBooking(accessToken, it, pageSize)
                     .subscribe(BookingObserver())
         }
-    }
-
-    inner class SubcriberTest: Subscriber<BookingResponse> {
-
-        override fun onSubscribe(s: Subscription?) {
-
-        }
-
-        override fun onNext(t: BookingResponse?) {
-
-        }
-
-        override fun onComplete() {
-        }
-
-        override fun onError(t: Throwable?) {
-        }
-
     }
 
     inner class BookingObserver: MaybeNetworkObserver<BookingResponse>() {

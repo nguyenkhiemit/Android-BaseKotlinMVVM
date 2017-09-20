@@ -11,7 +11,7 @@ import com.newgate.basekotlinmvvm.authentication.utils.validatePassword
 import com.newgate.basekotlinmvvm.authentication.view.RegisterFragment
 import com.newgate.basekotlinmvvm.base.utility.Constant.Companion.REQUEST_FAILED
 import com.newgate.basekotlinmvvm.base.utility.Constant.Companion.REQUEST_SUCCEEDED
-import com.newgate.basekotlinmvvm.base.viewmodel.LifecycleViewModel
+import com.newgate.basekotlinmvvm.base.viewmodel.Lifecycle
 import com.newgate.basekotlinmvvm.base.viewmodel.NetworkViewModel
 import com.newgate.basekotlinmvvm.base.di.BaseActivity
 import com.newgate.rxjava.base.NavigationManager
@@ -26,7 +26,7 @@ class LoginViewModel(
         val retrofit: Retrofit,
         val authenticationRequestManager: AuthenticationRequestManager,
         val navigationManager: NavigationManager
-): NetworkViewModel(), LifecycleViewModel {
+): NetworkViewModel(), Lifecycle {
 
     override fun onStart() {
 
@@ -88,6 +88,7 @@ class LoginViewModel(
         override fun onSuccess(response: AccountResponse) {
             super.onSuccess(response)
             onLoginSuccess()
+            navigationManager.onBack()
         }
 
         override fun onError(e: Throwable) {

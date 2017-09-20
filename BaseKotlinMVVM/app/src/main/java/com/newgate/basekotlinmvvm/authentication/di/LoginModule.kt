@@ -5,6 +5,7 @@ import com.newgate.basekotlinmvvm.base.di.scope.FragmentScope
 import com.newgate.basekotlinmvvm.authentication.network.AuthenticationRequestManager
 import com.newgate.basekotlinmvvm.authentication.view.viewmodel.LoginViewModel
 import com.newgate.basekotlinmvvm.base.di.BaseActivity
+import com.newgate.basekotlinmvvm.base.utility.PrefsUtil
 import com.newgate.rxjava.base.NavigationManager
 import dagger.Module
 import dagger.Provides
@@ -18,8 +19,8 @@ class LoginModule(val activity: BaseActivity) {
 
     @Provides
     @FragmentScope
-    fun provideAuthenticationRequestManager(retrofit: Retrofit): AuthenticationRequestManager {
-        return AuthenticationRequestManager(retrofit)
+    fun provideAuthenticationRequestManager(retrofit: Retrofit, prefsUtil: PrefsUtil): AuthenticationRequestManager {
+        return AuthenticationRequestManager(retrofit, prefsUtil)
     }
 
     @Provides

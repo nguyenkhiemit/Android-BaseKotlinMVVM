@@ -1,16 +1,39 @@
 package com.newgate.basekotlinmvvm.base.viewmodel
 
 /**
- * Created by apple on 9/15/17.
+ * Created by apple on 9/20/17.
  */
-interface LifecycleViewModel {
+open class LifecycleViewModel: Lifecycle {
 
-    fun onActivityCreated()
+    override fun onCreate() {
 
-    fun onStart()
+    }
 
-    fun onResume()
+    override fun onCreateView() {
+    }
 
-    fun onDestroy()
+    override fun onViewCreated() {
 
+    }
+
+    override fun onActivityCreated() {
+    }
+
+    override fun onStart() {
+    }
+
+    override fun onResume() {
+    }
+
+    override fun onPause() {
+    }
+
+    override fun onStop() {
+    }
+
+    override fun onDestroyView() {
+    }
+
+    override fun onDestroy() {
+    }
 }

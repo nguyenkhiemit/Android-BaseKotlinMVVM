@@ -9,7 +9,7 @@ import com.newgate.basekotlinmvvm.KotlinApplication
 import com.newgate.basekotlinmvvm.R
 import com.newgate.basekotlinmvvm.base.view.BaseFragment
 import com.newgate.basekotlinmvvm.authentication.view.LoginFragment
-import com.newgate.basekotlinmvvm.base.viewmodel.LifecycleViewModel
+import com.newgate.basekotlinmvvm.base.viewmodel.Lifecycle
 import com.newgate.basekotlinmvvm.menu.adapter.MenuAdapter
 import com.newgate.basekotlinmvvm.menu.di.MenuModule
 import com.newgate.basekotlinmvvm.menu.viewmodel.MenuViewModel
@@ -25,15 +25,19 @@ class MenuFragment : BaseFragment() {
     @Inject
     lateinit var viewModel: MenuViewModel
 
-    override fun getViewModel(): LifecycleViewModel? {
+    override fun getViewModel(): Lifecycle? {
         return viewModel
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view = inflater?.inflate(R.layout.fragment_menu, container, false)
         setupActivityComponent()
-        loadData(view!!)
         return view
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        loadData(view!!)
     }
 
     fun setupActivityComponent() {

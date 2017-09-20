@@ -26,7 +26,7 @@ abstract class LoadMoreAdapter<T>(var ctx: Context, var arrayData: ArrayList<T?>
 
     abstract fun onBindVHolder(holder: RecyclerView.ViewHolder, position: Int)
 
-    lateinit var scrollListener: EndlessRecyclerOnScrollListener
+    var scrollListener: EndlessRecyclerOnScrollListener? = null
 
     protected var parentView: RecyclerView? = null
 
@@ -97,11 +97,11 @@ abstract class LoadMoreAdapter<T>(var ctx: Context, var arrayData: ArrayList<T?>
     }
 
     fun finishLoadMore() {
-        scrollListener?.finishLoadMore()
+        scrollListener!!.finishLoadMore()
     }
 
     fun incrementPage() {
-        scrollListener.currentPage++
+        scrollListener!!.currentPage++
     }
 
     class LoadMoreViewHoler(itemView: View): RecyclerView.ViewHolder(itemView)

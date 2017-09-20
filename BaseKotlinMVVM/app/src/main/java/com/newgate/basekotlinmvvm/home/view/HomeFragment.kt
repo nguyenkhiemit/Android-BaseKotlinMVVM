@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.newgate.basekotlinmvvm.KotlinApplication
 import com.newgate.basekotlinmvvm.R
-import com.newgate.basekotlinmvvm.base.viewmodel.LifecycleViewModel
+import com.newgate.basekotlinmvvm.base.viewmodel.Lifecycle
 import com.newgate.basekotlinmvvm.base.view.BaseFragment
 import com.newgate.basekotlinmvvm.databinding.FragmentHomeBinding
 import com.newgate.basekotlinmvvm.home.di.HomeModule
@@ -22,7 +22,7 @@ class HomeFragment: BaseFragment() {
     @Inject
     lateinit var viewModel: HomeViewModel
 
-    override fun getViewModel(): LifecycleViewModel? {
+    override fun getViewModel(): Lifecycle? {
         return viewModel
     }
 

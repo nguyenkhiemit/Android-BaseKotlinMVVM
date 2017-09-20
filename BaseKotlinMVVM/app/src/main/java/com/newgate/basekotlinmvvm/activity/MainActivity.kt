@@ -13,7 +13,7 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        navigation.openFragment(R.id.containerFrame, HomeFragment(), NavigationManager.Type.REPLACE, NavigationManager.AnimationType.BOTTOM_TOP)
+        navigation.openFragment(R.id.containerFrame, HomeFragment(), NavigationManager.Type.REPLACE, null)
     }
 
     fun closeMenu() {

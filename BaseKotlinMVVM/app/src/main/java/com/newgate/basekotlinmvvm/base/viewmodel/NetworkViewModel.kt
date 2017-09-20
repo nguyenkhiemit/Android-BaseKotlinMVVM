@@ -11,7 +11,7 @@ import io.reactivex.observers.DisposableMaybeObserver
 /**
  * Created by apple on 9/11/17.
  */
-abstract class NetworkViewModel: LifecycleViewModel {
+abstract class NetworkViewModel: LifecycleViewModel() {
 
     abstract fun isRequestingInformation(): Boolean
 
@@ -48,22 +48,6 @@ abstract class NetworkViewModel: LifecycleViewModel {
             lastError = e
             requestState = REQUEST_FAILED
         }
-
-    }
-
-    override fun onActivityCreated() {
-
-    }
-
-    override fun onStart() {
-
-    }
-
-    override fun onResume() {
-
-    }
-
-    override fun onDestroy() {
 
     }
 

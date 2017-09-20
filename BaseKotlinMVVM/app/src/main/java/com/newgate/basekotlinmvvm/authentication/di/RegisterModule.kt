@@ -7,6 +7,7 @@ import com.newgate.basekotlinmvvm.authentication.network.AuthenticationRequestMa
 import com.newgate.basekotlinmvvm.authentication.viewmodel.RegisterViewModel
 import com.newgate.basekotlinmvvm.base.di.BaseActivity
 import com.newgate.basekotlinmvvm.base.di.scope.FragmentScope
+import com.newgate.basekotlinmvvm.base.utility.PrefsUtil
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -19,8 +20,8 @@ class RegisterModule(val activity: BaseActivity) {
 
     @Provides
     @FragmentScope
-    fun providerAuthenticationRequestManager(retrofit: Retrofit): AuthenticationRequestManager {
-        return AuthenticationRequestManager(retrofit)
+    fun providerAuthenticationRequestManager(retrofit: Retrofit, prefsUtil: PrefsUtil): AuthenticationRequestManager {
+        return AuthenticationRequestManager(retrofit, prefsUtil)
     }
 
     @Provides

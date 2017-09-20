@@ -9,6 +9,10 @@
         <item>ABOUT ME</item>
     </string-array>
 
+    <!-- base -->
+    <string name="title_exit_app">Thoát ứng dụng ?</string>
+    <string name="content_exit_app">Bạn có muốn thoát ứng dụng ?</string>
+
     <!-- authentication -->
     <string name="warning_pass_empty">Mật khẩu không được để trống</string>
     <string name="warning_pass_format">Mật khẩu phải chứa từ 8 kỳ tự trở lên</string>

@@ -3,6 +3,7 @@ package com.newgate.basekotlinmvvm.home.di
 import android.app.Application
 import com.newgate.basekotlinmvvm.base.di.BaseActivity
 import com.newgate.basekotlinmvvm.base.di.scope.FragmentScope
+import com.newgate.basekotlinmvvm.base.utility.PrefsUtil
 import com.newgate.basekotlinmvvm.home.adapter.BookingAdapter
 import com.newgate.basekotlinmvvm.home.model.Booking
 import com.newgate.basekotlinmvvm.home.network.HomeRequestManager
@@ -38,8 +39,8 @@ class HomeModule(var baseActivity: BaseActivity) {
     @Provides
     @FragmentScope
     fun provideHomeViewModel(retrofit: Retrofit, adapter: BookingAdapter,
-                             homeRequestManager: HomeRequestManager): HomeViewModel {
-        return HomeViewModel(baseActivity, retrofit, adapter, homeRequestManager)
+                             homeRequestManager: HomeRequestManager, prefsUtil: PrefsUtil): HomeViewModel {
+        return HomeViewModel(baseActivity, retrofit, adapter, homeRequestManager, prefsUtil)
     }
 
 }
