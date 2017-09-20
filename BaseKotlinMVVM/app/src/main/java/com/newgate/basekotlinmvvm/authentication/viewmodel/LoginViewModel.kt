@@ -72,7 +72,7 @@ class LoginViewModel(
     }
 
     fun openRegisterScreen() {
-        navigationManager.openFragment(R.id.containerFrame, RegisterFragment(), NavigationManager.Type.REPLACE, NavigationManager.AnimationType.BOTTOM_TOP)
+        navigationManager.openFragment(R.id.containerFrame, RegisterFragment(), NavigationManager.Type.ADD, NavigationManager.AnimationType.BOTTOM_TOP)
     }
 
     fun onLoginSuccess() {

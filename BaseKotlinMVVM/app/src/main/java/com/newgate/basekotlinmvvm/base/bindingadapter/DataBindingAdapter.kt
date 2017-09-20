@@ -1,8 +1,11 @@
 package com.newgate.basekotlinmvvm.base.bindingadapter
 
 import android.databinding.BindingAdapter
+import android.databinding.ObservableField
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.widget.ImageView
 import com.newgate.basekotlinmvvm.base.adapter.LoadMoreAdapter
 import com.newgate.basekotlinmvvm.base.utility.Constant
@@ -36,6 +39,21 @@ class DataBindingAdapter {
         fun setAdapter(recyclerView: RecyclerView, adapter: RecyclerView.Adapter<*>) {
             recyclerView.layoutManager = LinearLayoutManager(recyclerView.context)
             recyclerView.adapter = adapter
+        }
+
+        @BindingAdapter("binding:refreshListener")
+        @JvmStatic
+        fun setSwipeRefreshListener(swipeRefreshLayout: SwipeRefreshLayout, refreshListener: SwipeRefreshLayout.OnRefreshListener) {
+            swipeRefreshLayout.setOnRefreshListener(refreshListener)
+        }
+
+        @BindingAdapter("binding:isRefresh")
+        @JvmStatic
+        fun setRefreshing(swipeRefreshLayout: SwipeRefreshLayout, isRefresh: ObservableField<Boolean>) {
+            if(isRefresh.get() != null) {
+                Log.e("BookingResponse", "===> isRefreshing")
+                swipeRefreshLayout.isRefreshing = isRefresh.get()
+            }
         }
     }
 }

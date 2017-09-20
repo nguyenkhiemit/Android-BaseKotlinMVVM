@@ -1,6 +1,7 @@
 package com.newgate.basekotlinmvvm.base.view
 
 import android.os.Bundle
+import android.os.Handler
 import android.support.v4.app.Fragment
 import android.util.Log
 import android.view.LayoutInflater
@@ -24,11 +25,6 @@ open abstract class BaseFragment: Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return super.onCreateView(inflater, container, savedInstanceState)
-        if(savedInstanceState != null) {
-            Log.e("BaseFragment", "===> Khac NULL")
-        } else {
-            Log.e("BaseFragment", "===> NULL")
-        }
         getViewModel()?.onCreateView()
     }
 

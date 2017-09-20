@@ -2,6 +2,7 @@ package com.newgate.basekotlinmvvm.home.view
 
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +19,8 @@ import javax.inject.Inject
  * Created by apple on 9/9/17.
  */
 class HomeFragment: BaseFragment() {
+
+    private val EXTRA_VIEW_MODEL_STATE = "viewModelState"
 
     @Inject
     lateinit var viewModel: HomeViewModel

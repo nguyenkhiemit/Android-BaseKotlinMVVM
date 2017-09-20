@@ -1,9 +1,12 @@
 package com.newgate.rxjava.base
 
+import android.content.Context
+import android.content.Intent
 import android.support.annotation.IdRes
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import android.support.v4.app.FragmentTransaction
+import android.util.Log
 import com.newgate.basekotlinmvvm.R
 import com.newgate.basekotlinmvvm.base.di.BaseActivity
 import java.util.*
@@ -56,6 +59,21 @@ class NavigationManager(activity: BaseActivity) {
             transaction.commit()
         }
 
+    }
+
+    fun startActivity(context: Context, newActivity: BaseActivity) {
+        var intent = Intent(context, newActivity::class.java)
+        context.startActivity(intent)
+    }
+
+    fun getCurrentFragment(@IdRes containerId: Int): Fragment {
+        return fragmentManager.findFragmentById(containerId)
+    }
+
+    fun listenerOnBackStackChanged(listener:()->Unit) {
+        fragmentManager.addOnBackStackChangedListener {
+            listener()
+        }
     }
 
     /**

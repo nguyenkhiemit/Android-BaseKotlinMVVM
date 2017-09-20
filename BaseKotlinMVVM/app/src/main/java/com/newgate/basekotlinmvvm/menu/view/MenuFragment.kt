@@ -1,7 +1,9 @@
 package com.newgate.basekotlinmvvm.menu.view
 
 import android.os.Bundle
+import android.os.Handler
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -51,9 +53,13 @@ class MenuFragment : BaseFragment() {
         var arrayMenu =  viewModel!!.createData()
         var layoutManager = LinearLayoutManager(context)
         var adapter = MenuAdapter(context, arrayMenu, {
-            navigation.backToRoot()
             when(it.index) {
-                MenuViewModel.POS_LOGIN -> navigation.openFragment(R.id.containerFrame, LoginFragment(), NavigationManager.Type.REPLACE, NavigationManager.AnimationType.BOTTOM_TOP)
+                MenuViewModel.POS_HOME -> {
+                    navigation.backToRoot()
+                }
+                MenuViewModel.POS_LOGIN -> {
+                    navigation.openFragment(R.id.containerFrame, LoginFragment(), NavigationManager.Type.ADD, NavigationManager.AnimationType.BOTTOM_TOP)
+                }
             }
             mainActivity.closeMenu()
         })
