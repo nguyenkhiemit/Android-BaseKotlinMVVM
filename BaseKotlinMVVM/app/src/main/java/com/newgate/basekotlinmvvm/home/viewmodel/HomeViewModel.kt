@@ -34,13 +34,10 @@ class HomeViewModel(
 
     override fun refreshListener() {
         isRefresh.set(true)
-        if(isRequestRunning()) {
-            isRefresh.set(false)
-            return
-        }
         var accessToken = prefsUtil.getPref(AuthencationKey.ACCESS_TOKEN, "")
+        bookingAdapter.resetPage()
         bookingRequestManager.getListBooking(accessToken, 1, pageSize)
-                .subscribe(BookingObserver())
+                .subscribe(RefreshBookingObserver())
     }
 
     fun getListBooking() {
@@ -48,10 +45,8 @@ class HomeViewModel(
         DialogUtils.getInstance().showLoading(activity)
         //1) load data
         bookingAdapter.setLoadMoreData {
-            if(!isRequestRunning()) {
-                bookingRequestManager.getListBooking(accessToken, it, pageSize)
-                        .subscribe(BookingObserver())
-            }
+            bookingRequestManager.getListBooking(accessToken, it, pageSize)
+                    .subscribe(BookingObserver())
         }
     }
 
@@ -59,12 +54,6 @@ class HomeViewModel(
         override fun onSuccess(response: BookingResponse) {
             super.onSuccess(response)
             DialogUtils.getInstance().dismissLoading()
-            //refresh swipe refresh
-            if(isRefresh.get() == true) {
-                isRefresh.set(false)
-                bookingAdapter.arrayBooking?.clear()
-            }
-
             //2) restate load more
             bookingAdapter.restate()
             //3) finish load more
@@ -73,11 +62,27 @@ class HomeViewModel(
             if(KeyCode.SUCCESS == response.status) {
                 //4) increment page
                 bookingAdapter.reloadAdapter(response.data.arrayBooking)
+                bookingAdapter.incrementPage()
             }
         }
 
-        override fun onComplete() {
-            super.onComplete()
+        override fun onError(e: Throwable) {
+            super.onError(e)
+            DialogUtils.getInstance().dismissLoading()
+            //restate load more
+            bookingAdapter.restate()
+        }
+    }
+
+    inner class RefreshBookingObserver: MaybeNetworkObserver<BookingResponse>() {
+        override fun onSuccess(response: BookingResponse) {
+            super.onSuccess(response)
+            DialogUtils.getInstance().dismissLoading()
+            //refresh swipe refresh
+            isRefresh.set(false)
+           // bookingAdapter.arrayBooking?.clear()
+            bookingAdapter.removeItemAdapter()
+            bookingAdapter.reloadAdapter(response.data.arrayBooking)
         }
 
         override fun onError(e: Throwable) {
@@ -85,8 +90,6 @@ class HomeViewModel(
             DialogUtils.getInstance().dismissLoading()
             //refresh swipe refresh
             isRefresh.set(false)
-            //restate load more
-            bookingAdapter.restate()
         }
     }
 

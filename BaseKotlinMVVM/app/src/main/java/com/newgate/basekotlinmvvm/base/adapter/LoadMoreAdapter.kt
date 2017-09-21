@@ -12,7 +12,9 @@ import com.newgate.basekotlinmvvm.R
 import com.newgate.basekotlinmvvm.base.utility.KeyCode
 import com.newgate.basekotlinmvvm.base.view.EndlessRecyclerOnScrollListener
 import kotlinx.android.synthetic.main.layout_item_load_more.view.*
-
+import com.newgate.basekotlinmvvm.R.id.recyclerView
+import java.util.*
+import java.util.Collections.synchronizedList
 /**
  * Created by apple on 9/17/17.
  */
@@ -32,6 +34,8 @@ abstract class LoadMoreAdapter<T>(var ctx: Context, var arrayData: ArrayList<T?>
 
     fun setRecyclerView(view: RecyclerView) {
         this.parentView = view
+        val syncal = Collections.synchronizedList(ArrayList<String>())
+
     }
 
     fun setLoadMoreData(loadMoreListener: (currentPage: Int) -> Unit) {
@@ -54,7 +58,7 @@ abstract class LoadMoreAdapter<T>(var ctx: Context, var arrayData: ArrayList<T?>
 
     private fun loadMore() {
         arrayData.add(null)
-        notifyItemInserted(arrayData.size - 1)
+        parentView?.post(Runnable {  notifyItemInserted(arrayData.size - 1) })
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -104,14 +108,22 @@ abstract class LoadMoreAdapter<T>(var ctx: Context, var arrayData: ArrayList<T?>
         scrollListener!!.currentPage++
     }
 
+    fun resetPage() {
+        scrollListener!!.currentPage = 1
+    }
+
     fun reloadAdapter(arrayMoreData: ArrayList<T>) {
         if(arrayMoreData == null)
             return
         for(i in 0..arrayMoreData.size - 1) {
             arrayData.add(arrayMoreData[i])
-            notifyItemInserted(arrayMoreData.size)
+            notifyItemInserted(arrayData.size - 1)
         }
-        incrementPage()
+    }
+
+    fun removeItemAdapter() {
+        arrayData.clear()
+        notifyDataSetChanged()
     }
 
     class LoadMoreViewHoler(itemView: View): RecyclerView.ViewHolder(itemView)
