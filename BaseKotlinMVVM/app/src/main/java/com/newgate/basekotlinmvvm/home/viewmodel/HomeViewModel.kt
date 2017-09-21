@@ -1,11 +1,7 @@
 package com.newgate.basekotlinmvvm.home.viewmodel
 
-import android.databinding.ObservableField
-import android.support.v4.widget.SwipeRefreshLayout
 import android.util.Log
 import com.newgate.basekotlinmvvm.authentication.utils.AuthencationKey
-import com.newgate.basekotlinmvvm.base.viewmodel.Lifecycle
-import com.newgate.basekotlinmvvm.base.viewmodel.NetworkViewModel
 import com.newgate.basekotlinmvvm.base.di.BaseActivity
 import com.newgate.basekotlinmvvm.base.utility.*
 import com.newgate.basekotlinmvvm.base.viewmodel.SwipeRefreshViewModel
@@ -25,18 +21,26 @@ class HomeViewModel(
         val prefsUtil: PrefsUtil
     ): SwipeRefreshViewModel() {
 
-    var pageSize: Int = 10
-
-    override fun refreshListener() {
-        isRefresh.set(true)
-        bookingAdapter.arrayBooking?.clear()
-        var accessToken = prefsUtil.getPref(AuthencationKey.ACCESS_TOKEN, "")
-        bookingRequestManager.getListBooking(accessToken, 1, pageSize)
-                .subscribe(BookingObserver())
+    override fun onActivityCreated() {
+        super.onActivityCreated()
+        getListBooking()
     }
+
+    var pageSize: Int = 10
 
     override fun isRequestingInformation(): Boolean {
         return bookingRequestManager.isRequestingListBooking()
+    }
+
+    override fun refreshListener() {
+        isRefresh.set(true)
+        if(isRequestRunning()) {
+            isRefresh.set(false)
+            return
+        }
+        var accessToken = prefsUtil.getPref(AuthencationKey.ACCESS_TOKEN, "")
+        bookingRequestManager.getListBooking(accessToken, 1, pageSize)
+                .subscribe(BookingObserver())
     }
 
     fun getListBooking() {
@@ -44,9 +48,10 @@ class HomeViewModel(
         DialogUtils.getInstance().showLoading(activity)
         //1) load data
         bookingAdapter.setLoadMoreData {
-            Log.e("XLoadMore ", "page = " + it)
-            bookingRequestManager.getListBooking(accessToken, it, pageSize)
-                    .subscribe(BookingObserver())
+            if(!isRequestRunning()) {
+                bookingRequestManager.getListBooking(accessToken, it, pageSize)
+                        .subscribe(BookingObserver())
+            }
         }
     }
 
@@ -54,7 +59,11 @@ class HomeViewModel(
         override fun onSuccess(response: BookingResponse) {
             super.onSuccess(response)
             DialogUtils.getInstance().dismissLoading()
-            isRefresh.set(false)
+            //refresh swipe refresh
+            if(isRefresh.get() == true) {
+                isRefresh.set(false)
+                bookingAdapter.arrayBooking?.clear()
+            }
 
             //2) restate load more
             bookingAdapter.restate()
@@ -76,6 +85,7 @@ class HomeViewModel(
         override fun onError(e: Throwable) {
             super.onError(e)
             DialogUtils.getInstance().dismissLoading()
+            //refresh swipe refresh
             isRefresh.set(false)
             //restate load more
             bookingAdapter.restate()
@@ -95,12 +105,6 @@ class HomeViewModel(
     override fun onViewCreated() {
         super.onViewCreated()
         Log.e("X_load", "==> onViewCreated")
-    }
-
-    override fun onActivityCreated() {
-        super.onActivityCreated()
-        Log.e("X_load", "==> onActivityCreated")
-        getListBooking()
     }
 
     override fun onResume() {

@@ -1,6 +1,7 @@
 package com.newgate.basekotlinmvvm.base.viewmodel
 
 import android.support.annotation.CallSuper
+import com.newgate.basekotlinmvvm.base.utility.Constant
 import com.newgate.basekotlinmvvm.base.utility.Constant.Companion.REQUEST_FAILED
 import com.newgate.basekotlinmvvm.base.utility.Constant.Companion.REQUEST_NONE
 import com.newgate.basekotlinmvvm.base.utility.Constant.Companion.REQUEST_RUNNING
@@ -49,6 +50,16 @@ abstract class NetworkViewModel: LifecycleViewModel() {
             requestState = REQUEST_FAILED
         }
 
+    }
+
+    fun isRequestRunning(): Boolean {
+        @Constant.Companion.RequestState
+        var requestState = getRequestState()
+        if(requestState == Constant.REQUEST_RUNNING) {
+            return true
+        } else {
+            return false
+        }
     }
 
 }
