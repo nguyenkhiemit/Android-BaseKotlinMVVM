@@ -104,5 +104,15 @@ abstract class LoadMoreAdapter<T>(var ctx: Context, var arrayData: ArrayList<T?>
         scrollListener!!.currentPage++
     }
 
+    fun reloadAdapter(arrayMoreData: ArrayList<T>) {
+        if(arrayMoreData == null)
+            return
+        for(i in 0..arrayMoreData.size - 1) {
+            arrayData.add(arrayMoreData[i])
+            notifyItemInserted(arrayMoreData.size)
+        }
+        incrementPage()
+    }
+
     class LoadMoreViewHoler(itemView: View): RecyclerView.ViewHolder(itemView)
 }

@@ -72,9 +72,7 @@ class HomeViewModel(
                 bookingAdapter.finishLoadMore()
             if(KeyCode.SUCCESS == response.status) {
                 //4) increment page
-                bookingAdapter.incrementPage()
-                bookingAdapter.arrayBooking?.addAll(response.data.arrayBooking)
-                bookingAdapter.notifyDataSetChanged()
+                bookingAdapter.reloadAdapter(response.data.arrayBooking)
             }
         }
 
