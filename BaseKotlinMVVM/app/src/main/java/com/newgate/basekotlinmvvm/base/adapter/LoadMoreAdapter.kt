@@ -121,7 +121,7 @@ abstract class LoadMoreAdapter<T>(var ctx: Context, var arrayData: ArrayList<T?>
         }
     }
 
-    fun removeItemAdapter() {
+    fun clearAdapter() {
         arrayData.clear()
         notifyDataSetChanged()
     }

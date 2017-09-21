@@ -35,6 +35,7 @@ class HomeViewModel(
     override fun refreshListener() {
         isRefresh.set(true)
         var accessToken = prefsUtil.getPref(AuthencationKey.ACCESS_TOKEN, "")
+        //reset current pager to 1
         bookingAdapter.resetPage()
         bookingRequestManager.getListBooking(accessToken, 1, pageSize)
                 .subscribe(RefreshBookingObserver())
@@ -80,8 +81,7 @@ class HomeViewModel(
             DialogUtils.getInstance().dismissLoading()
             //refresh swipe refresh
             isRefresh.set(false)
-           // bookingAdapter.arrayBooking?.clear()
-            bookingAdapter.removeItemAdapter()
+            bookingAdapter.clearAdapter()
             bookingAdapter.reloadAdapter(response.data.arrayBooking)
         }
 
