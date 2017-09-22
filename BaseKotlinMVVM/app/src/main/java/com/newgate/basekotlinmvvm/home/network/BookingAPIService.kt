@@ -2,6 +2,8 @@ package com.newgate.basekotlinmvvm.home.network
 
 import com.newgate.basekotlinmvvm.home.model.BookingResponse
 import com.newgate.basekotlinmvvm.home.model.BookingRequest
+import io.reactivex.BackpressureStrategy
+import io.reactivex.Flowable
 import io.reactivex.Maybe
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -18,12 +20,12 @@ class BookingAPIService(retrofit: Retrofit) {
 
     var isRequestingListBooking: Boolean = false
 
-    fun getListBooking(request: BookingRequest): Maybe<BookingResponse> {
+    fun getListBooking(request: BookingRequest): Flowable<BookingResponse> {
         return bookingAPIService.getListBooking(request.accessToken, request.page, request.pageSize)
                 .doOnSubscribe({isRequestingListBooking = true})
                 .doOnTerminate({isRequestingListBooking = false})
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .singleElement()
+                .toFlowable(BackpressureStrategy.BUFFER)
     }
 }

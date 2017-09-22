@@ -106,6 +106,7 @@ abstract class LoadMoreAdapter<T>(var ctx: Context, var arrayData: ArrayList<T?>
 
     fun incrementPage() {
         scrollListener!!.currentPage++
+        Log.e("XcurrentPage", "" + scrollListener!!.currentPage)
     }
 
     fun resetPage() {

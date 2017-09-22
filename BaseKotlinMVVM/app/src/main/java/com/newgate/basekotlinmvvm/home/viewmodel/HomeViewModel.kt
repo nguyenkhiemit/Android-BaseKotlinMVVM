@@ -1,17 +1,18 @@
 package com.newgate.basekotlinmvvm.home.viewmodel
 
-import android.util.Log
 import com.newgate.basekotlinmvvm.authentication.utils.AuthencationKey
 import com.newgate.basekotlinmvvm.base.di.BaseActivity
-import com.newgate.basekotlinmvvm.base.utility.*
-import com.newgate.basekotlinmvvm.base.viewmodel.SwipeRefreshViewModel
+import com.newgate.basekotlinmvvm.base.utility.KeyCode
+import com.newgate.basekotlinmvvm.base.utility.PrefsUtil
+import com.newgate.basekotlinmvvm.base.viewmodel.SwipeRefreshLoadMoreViewModel
 import com.newgate.basekotlinmvvm.home.adapter.BookingAdapter
 import com.newgate.basekotlinmvvm.home.model.BookingResponse
 import com.newgate.basekotlinmvvm.home.network.HomeRequestManager
+import io.reactivex.disposables.Disposable
 import retrofit2.Retrofit
 
 /**
- * Created by apple on 9/16/17.
+ * Created by apple on 9/22/17.
  */
 class HomeViewModel(
         val activity: BaseActivity,
@@ -19,118 +20,38 @@ class HomeViewModel(
         val bookingAdapter: BookingAdapter,
         val bookingRequestManager: HomeRequestManager,
         val prefsUtil: PrefsUtil
-    ): SwipeRefreshViewModel() {
+        ): SwipeRefreshLoadMoreViewModel(activity, bookingAdapter) {
 
-    override fun onActivityCreated() {
-        super.onActivityCreated()
-        getListBooking()
-    }
-
-    var pageSize: Int = 10
-
-    override fun isRequestingInformation(): Boolean {
-        return bookingRequestManager.isRequestingListBooking()
-    }
-
-    override fun refreshListener() {
-        isRefresh.set(true)
+    override fun refreshData(): Disposable {
         var accessToken = prefsUtil.getPref(AuthencationKey.ACCESS_TOKEN, "")
-        //reset current pager to 1
-        bookingAdapter.resetPage()
-        bookingRequestManager.getListBooking(accessToken, 1, pageSize)
-                .subscribe(RefreshBookingObserver())
+        return bookingRequestManager.getListBooking(accessToken, 1, pageSize)
+                .subscribeWith(RefreshBookingSubscriber())
     }
 
-    fun getListBooking() {
+    override fun loadMoreData(page: Int): Disposable {
         var accessToken = prefsUtil.getPref(AuthencationKey.ACCESS_TOKEN, "")
-        DialogUtils.getInstance().showLoading(activity)
-        //1) load data
-        bookingAdapter.setLoadMoreData {
-            bookingRequestManager.getListBooking(accessToken, it, pageSize)
-                    .subscribe(BookingObserver())
+        return bookingRequestManager.getListBooking(accessToken, page, pageSize)
+                .subscribeWith(LoadMoreBookingSubscriber())
+    }
+
+    inner class RefreshBookingSubscriber: RefreshSubscriber<BookingResponse>() {
+        override fun onNext(response: BookingResponse) {
+            super.onNext(response)
+            bookingAdapter.reloadAdapter(response.data.arrayBooking)
         }
     }
 
-    inner class BookingObserver: MaybeNetworkObserver<BookingResponse>() {
-        override fun onSuccess(response: BookingResponse) {
-            super.onSuccess(response)
-            DialogUtils.getInstance().dismissLoading()
-            //2) restate load more
-            bookingAdapter.restate()
-            //3) finish load more
-            if(response.data.arrayBooking == null || response.data.arrayBooking.size == 0)
+    inner class LoadMoreBookingSubscriber: LoadMoreSubscriber<BookingResponse>() {
+        override fun onNext(response: BookingResponse) {
+            super.onNext(response)
+            // finish load more
+            if(response!!.data.arrayBooking == null || response.data.arrayBooking.size == 0)
                 bookingAdapter.finishLoadMore()
             if(KeyCode.SUCCESS == response.status) {
-                //4) increment page
+                // increment page
                 bookingAdapter.reloadAdapter(response.data.arrayBooking)
                 bookingAdapter.incrementPage()
             }
         }
-
-        override fun onError(e: Throwable) {
-            super.onError(e)
-            DialogUtils.getInstance().dismissLoading()
-            //restate load more
-            bookingAdapter.restate()
-        }
     }
-
-    inner class RefreshBookingObserver: MaybeNetworkObserver<BookingResponse>() {
-        override fun onSuccess(response: BookingResponse) {
-            super.onSuccess(response)
-            DialogUtils.getInstance().dismissLoading()
-            //refresh swipe refresh
-            isRefresh.set(false)
-            bookingAdapter.clearAdapter()
-            bookingAdapter.reloadAdapter(response.data.arrayBooking)
-        }
-
-        override fun onError(e: Throwable) {
-            super.onError(e)
-            DialogUtils.getInstance().dismissLoading()
-            //refresh swipe refresh
-            isRefresh.set(false)
-        }
-    }
-
-    override fun onCreate() {
-        super.onCreate()
-        Log.e("X_load", "==> onCreate")
-    }
-
-    override fun onCreateView() {
-        super.onCreateView()
-        Log.e("X_load", "==> onCreateView")
-    }
-
-    override fun onViewCreated() {
-        super.onViewCreated()
-        Log.e("X_load", "==> onViewCreated")
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Log.e("X_load", "==> onResume")
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.e("X_load", "==> onPause")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        Log.e("X_load", "==> onStop")
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        Log.e("X_load", "==> onDestroyView")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.e("X_load", "==> onDestroy")
-    }
-
 }

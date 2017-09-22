@@ -2,6 +2,7 @@ package com.newgate.basekotlinmvvm.home.network
 
 import com.newgate.basekotlinmvvm.home.model.BookingResponse
 import com.newgate.basekotlinmvvm.home.model.BookingRequest
+import io.reactivex.Flowable
 import io.reactivex.MaybeSource
 import retrofit2.Retrofit
 
@@ -22,7 +23,7 @@ class HomeRequestManager(retrofit: Retrofit) {
         return BookingRequest(accessToken, page, pageSize)
     }
 
-    fun getListBooking(accessToken: String, page: Int, pageSize: Int): MaybeSource<BookingResponse> {
+    fun getListBooking(accessToken: String, page: Int, pageSize: Int): Flowable<BookingResponse> {
         return bookingAPIService.getListBooking(createBookingRequest(accessToken, page, pageSize))
     }
 }
